@@ -34,6 +34,9 @@ export function TransactionList({
                 </p>
                 <p className="text-sm text-slate-500">
                   {transaction.category} · {transaction.date}
+                  {transaction.type === "expense" && transaction.expenseType
+                    ? ` · ${transaction.expenseType}`
+                    : ""}
                 </p>
               </div>
 

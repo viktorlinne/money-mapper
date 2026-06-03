@@ -16,6 +16,9 @@ public sealed class Transaction
     [MaxLength(20)]
     public required string Type { get; set; }
 
+    [MaxLength(20)]
+    public string? ExpenseType { get; set; }
+
     [MaxLength(40)]
     public required string Category { get; set; }
 

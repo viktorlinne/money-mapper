@@ -1,6 +1,22 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { AnimatedCurrency } from "../components/AnimatedCurrency";
+import { BalanceOverTimeChart } from "../components/BalanceOverTimeChart";
+import { BudgetVsActualChart } from "../components/BudgetVsActualChart";
 import { CategoryChart } from "../components/CategoryChart";
+import { CategoryBudgetOverview } from "../components/CategoryBudgetOverview";
+import { CategorySpendingTrendChart } from "../components/CategorySpendingTrendChart";
+import { CumulativeMonthlySpendingChart } from "../components/CumulativeMonthlySpendingChart";
+import { CurrencyConverter } from "../components/CurrencyConverter";
 import { DashboardCard } from "../components/DashboardCard";
+import { DailySpendingChart } from "../components/DailySpendingChart";
+import { ExpenseTypeRatioChart } from "../components/ExpenseTypeRatioChart";
+import { IncomeBreakdownChart } from "../components/IncomeBreakdownChart";
+import { MonthlyCashflowChart } from "../components/MonthlyCashflowChart";
+import { SavingsRateChart } from "../components/SavingsRateChart";
+import { SubscriptionTracker } from "../components/SubscriptionTracker";
+import { TopSpendingCategoriesChart } from "../components/TopSpendingCategoriesChart";
+import { TransactionImport } from "../components/TransactionImport";
 import { TransactionList } from "../components/TransactionList";
 import { TransactionForm } from "../components/TransactionForm";
 import {
@@ -10,7 +26,6 @@ import {
 } from "../features/transactions/transactionApi";
 import type { Transaction } from "../features/transactions/transactionTypes";
 import {
-  formatCurrency,
   getBalance,
   getTotalExpenses,
   getTotalIncome,
@@ -83,12 +98,38 @@ export function DashboardPage() {
     setErrorMessage(null);
   }
 
+  async function handleImportTransactions(
+    importedTransactions: Omit<Transaction, "id">[],
+  ) {
+    try {
+      const savedTransactions = await Promise.all(
+        importedTransactions.map((transaction) =>
+          createTransaction(transaction),
+        ),
+      );
+
+      setTransactions((currentTransactions) => [
+        ...savedTransactions,
+        ...currentTransactions,
+      ]);
+      setErrorMessage(null);
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Could not import transactions.");
+    }
+  }
+
   const income = getTotalIncome(transactions);
   const expenses = getTotalExpenses(transactions);
   const balance = getBalance(transactions);
 
   return (
-    <main className="min-h-screen bg-slate-100 px-6 py-8">
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen bg-slate-100 px-6 py-8"
+    >
       <div className="mx-auto max-w-6xl">
         <header className="mb-8">
           <p className="text-sm font-medium text-indigo-600">MoneyMapper</p>
@@ -98,9 +139,7 @@ export function DashboardPage() {
           <p className="mt-2 text-slate-600">
             Track income, expenses, budgets, and spending patterns.
           </p>
-          <p className="mt-3 text-sm text-slate-500">
-            Data source: MySQL API
-          </p>
+          <p className="mt-3 text-sm text-slate-500">Data source: MySQL API</p>
         </header>
 
         {errorMessage && (
@@ -112,17 +151,17 @@ export function DashboardPage() {
         <section className="grid gap-4 md:grid-cols-3">
           <DashboardCard
             label="Balance"
-            value={formatCurrency(balance)}
+            value={<AnimatedCurrency amount={balance} />}
             helperText="Income minus expenses"
           />
           <DashboardCard
             label="Income"
-            value={formatCurrency(income)}
+            value={<AnimatedCurrency amount={income} />}
             helperText="This month"
           />
           <DashboardCard
             label="Expenses"
-            value={formatCurrency(expenses)}
+            value={<AnimatedCurrency amount={expenses} />}
             helperText="This month"
           />
         </section>
@@ -143,9 +182,40 @@ export function DashboardPage() {
             <TransactionForm onAddTransaction={handleAddTransaction} />
 
             <CategoryChart transactions={transactions} />
+            <TransactionImport
+              onImportTransactions={handleImportTransactions}
+            />
+            <CurrencyConverter />
+          </div>
+        </section>
+
+        <section className="mt-6 grid gap-6 lg:grid-cols-2">
+          <CategoryBudgetOverview transactions={transactions} />
+          <SubscriptionTracker transactions={transactions} />
+        </section>
+
+        <section className="mt-6">
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-slate-950">Insights</h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Spot trends across income, expenses, and balance.
+            </p>
+          </div>
+
+          <div className="grid gap-6 xl:grid-cols-2">
+            <MonthlyCashflowChart transactions={transactions} />
+            <BalanceOverTimeChart transactions={transactions} />
+            <TopSpendingCategoriesChart transactions={transactions} />
+            <CategorySpendingTrendChart transactions={transactions} />
+            <DailySpendingChart transactions={transactions} />
+            <CumulativeMonthlySpendingChart transactions={transactions} />
+            <IncomeBreakdownChart transactions={transactions} />
+            <ExpenseTypeRatioChart transactions={transactions} />
+            <SavingsRateChart transactions={transactions} />
+            <BudgetVsActualChart transactions={transactions} />
           </div>
         </section>
       </div>
-    </main>
+    </motion.main>
   );
 }

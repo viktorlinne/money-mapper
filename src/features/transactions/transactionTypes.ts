@@ -1,5 +1,7 @@
 export type TransactionType = "income" | "expense";
 
+export type ExpenseType = "fixed" | "variable";
+
 export type TransactionCategory =
   | "Salary"
   | "Food"
@@ -15,6 +17,7 @@ export type Transaction = {
   title: string;
   amount: number;
   type: TransactionType;
+  expenseType?: ExpenseType | null;
   category: TransactionCategory;
   date: string;
 };

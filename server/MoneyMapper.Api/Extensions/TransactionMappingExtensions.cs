@@ -11,6 +11,7 @@ public static class TransactionMappingExtensions
             transaction.Title,
             transaction.Amount,
             transaction.Type,
+            transaction.ExpenseType,
             transaction.Category,
             transaction.Date
         );

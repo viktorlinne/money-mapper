@@ -1,12 +1,15 @@
 import { useState, type FormEvent } from "react";
 import type {
+  ExpenseType,
   Transaction,
   TransactionCategory,
   TransactionType,
 } from "../features/transactions/transactionTypes";
 
 type TransactionFormProps = {
-  onAddTransaction: (transaction: Omit<Transaction, "id">) => void | Promise<void>;
+  onAddTransaction: (
+    transaction: Omit<Transaction, "id">,
+  ) => void | Promise<void>;
 };
 
 const categories: TransactionCategory[] = [
@@ -26,6 +29,7 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState<TransactionType>("expense");
+  const [expenseType, setExpenseType] = useState<ExpenseType>("variable");
   const [category, setCategory] = useState<TransactionCategory>("Food");
   const [date, setDate] = useState(getToday());
 
@@ -47,6 +51,7 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
       title: title.trim(),
       amount: parsedAmount,
       type,
+      expenseType: type === "expense" ? expenseType : null,
       category,
       date,
     });
@@ -54,6 +59,7 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
     setTitle("");
     setAmount("");
     setType("expense");
+    setExpenseType("variable");
     setCategory("Food");
     setDate(getToday());
   }
@@ -129,6 +135,24 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
             </select>
           </label>
         </div>
+
+        {type === "expense" && (
+          <label className="block">
+            <span className="text-sm font-medium text-slate-700">
+              Expense type
+            </span>
+            <select
+              value={expenseType}
+              onChange={(event) =>
+                setExpenseType(event.target.value as ExpenseType)
+              }
+              className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            >
+              <option value="variable">Variable</option>
+              <option value="fixed">Fixed</option>
+            </select>
+          </label>
+        )}
 
         <label className="block">
           <span className="text-sm font-medium text-slate-700">Date</span>

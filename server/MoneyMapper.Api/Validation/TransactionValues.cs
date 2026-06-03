@@ -2,11 +2,9 @@ namespace MoneyMapper.Api.Validation;
 
 public static class TransactionValues
 {
-    public static readonly string[] Types =
-    [
-        "income",
-        "expense",
-    ];
+    public static readonly string[] Types = ["income", "expense"];
+
+    public static readonly string[] ExpenseTypes = ["fixed", "variable"];
 
     public static readonly string[] Categories =
     [

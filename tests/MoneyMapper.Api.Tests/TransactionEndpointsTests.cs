@@ -17,6 +17,7 @@ public sealed class TransactionEndpointsTests(MoneyMapperApiFactory factory)
             "Salary",
             32000,
             "income",
+            null,
             "Salary",
             new DateOnly(2026, 6, 1)
         );
@@ -29,6 +30,7 @@ public sealed class TransactionEndpointsTests(MoneyMapperApiFactory factory)
         Assert.NotNull(created);
         Assert.NotEqual(Guid.Empty, created.Id);
         Assert.Equal(request.Title, created.Title);
+        Assert.Null(created.ExpenseType);
     }
 
     [Fact]
@@ -38,6 +40,7 @@ public sealed class TransactionEndpointsTests(MoneyMapperApiFactory factory)
             "Groceries",
             650,
             "expense",
+            "variable",
             "Food",
             new DateOnly(2026, 6, 2)
         );
@@ -59,6 +62,7 @@ public sealed class TransactionEndpointsTests(MoneyMapperApiFactory factory)
             "",
             0,
             "transfer",
+            "fixed",
             "Invalid",
             new DateOnly(2026, 6, 1)
         );
@@ -72,6 +76,7 @@ public sealed class TransactionEndpointsTests(MoneyMapperApiFactory factory)
         Assert.Contains("title", problem.Errors.Keys);
         Assert.Contains("amount", problem.Errors.Keys);
         Assert.Contains("type", problem.Errors.Keys);
+        Assert.Contains("expenseType", problem.Errors.Keys);
         Assert.Contains("category", problem.Errors.Keys);
     }
 }
