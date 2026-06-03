@@ -15,9 +15,9 @@ export function CategoryBudgetOverview({
   const budgetActuals = getBudgetActuals(transactions, categoryBudgets);
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">Category budgets</h2>
-      <p className="mt-2 text-sm text-slate-500">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">Category budgets</h2>
+      <p className="mt-2 text-sm text-ink-muted">
         Track spending against starter monthly budgets.
       </p>
 
@@ -29,21 +29,21 @@ export function CategoryBudgetOverview({
           return (
             <div key={item.category}>
               <div className="mb-2 flex justify-between gap-3 text-sm">
-                <span className="font-medium text-slate-700">
+                <span className="font-medium text-ink-label">
                   {item.category}
                 </span>
                 <span
-                  className={isOverBudget ? "text-rose-600" : "text-slate-500"}
+                  className={isOverBudget ? "text-negative" : "text-ink-muted"}
                 >
                   {formatCurrency(item.actual)} / {formatCurrency(item.budget)}
                 </span>
               </div>
-              <div className="h-3 rounded-full bg-slate-100">
+              <div className="h-3 rounded-full bg-canvas">
                 <div
                   className={
                     isOverBudget
-                      ? "h-3 rounded-full bg-rose-500"
-                      : "h-3 rounded-full bg-indigo-600"
+                      ? "h-3 rounded-full bg-negative"
+                      : "h-3 rounded-full bg-accent"
                   }
                   style={{ width: `${percentage}%` }}
                 />

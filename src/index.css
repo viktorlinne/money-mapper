@@ -1,1 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+}
+
+@theme {
+  /* Font */
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+
+  /* Surface layers — blue-violet tinted, not warm-neutral */
+  --color-canvas: oklch(0.975 0.012 280);
+  --color-surface: oklch(1 0 0);
+  --color-surface-low: oklch(0.987 0.007 280);
+
+  /* Ink — text hierarchy with subtle blue cast */
+  --color-ink: oklch(0.12 0.02 264);
+  --color-ink-secondary: oklch(0.42 0.04 264);
+  --color-ink-muted: oklch(0.55 0.03 264);
+  --color-ink-label: oklch(0.35 0.04 264);
+
+  /* Structure — borders share the canvas hue family */
+  --color-structure: oklch(0.895 0.016 268);
+
+  /* Accent — Vibrant Blue (Vibrant Pulse primary) */
+  --color-accent: oklch(0.52 0.26 264);
+  --color-accent-deep: oklch(0.46 0.25 264);
+  --color-accent-subtle: oklch(0.97 0.025 264);
+  --color-accent-ring: oklch(0.92 0.05 264);
+
+  /* Financial semantics — unchanged */
+  --color-positive: var(--color-emerald-600);
+  --color-negative: var(--color-rose-600);
+  --color-negative-bg: var(--color-rose-50);
+  --color-negative-border: var(--color-rose-200);
+  --color-negative-text: var(--color-rose-700);
+
+  /* Radius — ROUND_EIGHT standard: 8px controls, 12px containers */
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.75rem;
+}

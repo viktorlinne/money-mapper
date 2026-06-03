@@ -1,24 +1,13 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { AnimatedCurrency } from "../components/AnimatedCurrency";
-import { BalanceOverTimeChart } from "../components/BalanceOverTimeChart";
-import { BudgetVsActualChart } from "../components/BudgetVsActualChart";
-import { CategoryChart } from "../components/CategoryChart";
 import { CategoryBudgetOverview } from "../components/CategoryBudgetOverview";
-import { CategorySpendingTrendChart } from "../components/CategorySpendingTrendChart";
-import { CumulativeMonthlySpendingChart } from "../components/CumulativeMonthlySpendingChart";
 import { CurrencyConverter } from "../components/CurrencyConverter";
 import { DashboardCard } from "../components/DashboardCard";
-import { DailySpendingChart } from "../components/DailySpendingChart";
-import { ExpenseTypeRatioChart } from "../components/ExpenseTypeRatioChart";
-import { IncomeBreakdownChart } from "../components/IncomeBreakdownChart";
-import { MonthlyCashflowChart } from "../components/MonthlyCashflowChart";
-import { SavingsRateChart } from "../components/SavingsRateChart";
 import { SubscriptionTracker } from "../components/SubscriptionTracker";
-import { TopSpendingCategoriesChart } from "../components/TopSpendingCategoriesChart";
+import { TransactionForm } from "../components/TransactionForm";
 import { TransactionImport } from "../components/TransactionImport";
 import { TransactionList } from "../components/TransactionList";
-import { TransactionForm } from "../components/TransactionForm";
 import {
   createTransaction,
   deleteTransaction,
@@ -30,6 +19,49 @@ import {
   getTotalExpenses,
   getTotalIncome,
 } from "../features/transactions/transactionUtils";
+
+const CategoryChart = lazy(() =>
+  import("../components/CategoryChart").then((m) => ({ default: m.CategoryChart })),
+);
+const BalanceOverTimeChart = lazy(() =>
+  import("../components/BalanceOverTimeChart").then((m) => ({ default: m.BalanceOverTimeChart })),
+);
+const BudgetVsActualChart = lazy(() =>
+  import("../components/BudgetVsActualChart").then((m) => ({ default: m.BudgetVsActualChart })),
+);
+const CategorySpendingTrendChart = lazy(() =>
+  import("../components/CategorySpendingTrendChart").then((m) => ({ default: m.CategorySpendingTrendChart })),
+);
+const CumulativeMonthlySpendingChart = lazy(() =>
+  import("../components/CumulativeMonthlySpendingChart").then((m) => ({ default: m.CumulativeMonthlySpendingChart })),
+);
+const DailySpendingChart = lazy(() =>
+  import("../components/DailySpendingChart").then((m) => ({ default: m.DailySpendingChart })),
+);
+const ExpenseTypeRatioChart = lazy(() =>
+  import("../components/ExpenseTypeRatioChart").then((m) => ({ default: m.ExpenseTypeRatioChart })),
+);
+const IncomeBreakdownChart = lazy(() =>
+  import("../components/IncomeBreakdownChart").then((m) => ({ default: m.IncomeBreakdownChart })),
+);
+const MonthlyCashflowChart = lazy(() =>
+  import("../components/MonthlyCashflowChart").then((m) => ({ default: m.MonthlyCashflowChart })),
+);
+const SavingsRateChart = lazy(() =>
+  import("../components/SavingsRateChart").then((m) => ({ default: m.SavingsRateChart })),
+);
+const TopSpendingCategoriesChart = lazy(() =>
+  import("../components/TopSpendingCategoriesChart").then((m) => ({ default: m.TopSpendingCategoriesChart })),
+);
+
+function ChartSkeleton() {
+  return (
+    <div className="rounded-2xl border border-structure bg-surface p-5 animate-pulse">
+      <div className="h-5 w-36 rounded-lg bg-surface-low" />
+      <div className="mt-6 h-52 rounded-xl bg-surface-low" />
+    </div>
+  );
+}
 
 export function DashboardPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -66,22 +98,25 @@ export function DashboardPage() {
     };
   }, []);
 
-  async function handleAddTransaction(transaction: Omit<Transaction, "id">) {
-    try {
-      const savedTransaction = await createTransaction(transaction);
+  const handleAddTransaction = useCallback(
+    async (transaction: Omit<Transaction, "id">) => {
+      try {
+        const savedTransaction = await createTransaction(transaction);
 
-      setTransactions((currentTransactions) => [
-        savedTransaction,
-        ...currentTransactions,
-      ]);
-      setErrorMessage(null);
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Could not save the transaction.");
-    }
-  }
+        setTransactions((currentTransactions) => [
+          savedTransaction,
+          ...currentTransactions,
+        ]);
+        setErrorMessage(null);
+      } catch (error) {
+        console.error(error);
+        setErrorMessage("Could not save the transaction.");
+      }
+    },
+    [],
+  );
 
-  async function handleDeleteTransaction(transactionId: string) {
+  const handleDeleteTransaction = useCallback(async (transactionId: string) => {
     try {
       await deleteTransaction(transactionId);
     } catch (error) {
@@ -96,79 +131,86 @@ export function DashboardPage() {
       ),
     );
     setErrorMessage(null);
-  }
+  }, []);
 
-  async function handleImportTransactions(
-    importedTransactions: Omit<Transaction, "id">[],
-  ) {
-    try {
-      const savedTransactions = await Promise.all(
-        importedTransactions.map((transaction) =>
-          createTransaction(transaction),
-        ),
-      );
+  const handleImportTransactions = useCallback(
+    async (importedTransactions: Omit<Transaction, "id">[]) => {
+      try {
+        const savedTransactions = await Promise.all(
+          importedTransactions.map((transaction) =>
+            createTransaction(transaction),
+          ),
+        );
 
-      setTransactions((currentTransactions) => [
-        ...savedTransactions,
-        ...currentTransactions,
-      ]);
-      setErrorMessage(null);
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Could not import transactions.");
-    }
-  }
+        setTransactions((currentTransactions) => [
+          ...savedTransactions,
+          ...currentTransactions,
+        ]);
+        setErrorMessage(null);
+      } catch (error) {
+        console.error(error);
+        setErrorMessage("Could not import transactions.");
+      }
+    },
+    [],
+  );
 
-  const income = getTotalIncome(transactions);
-  const expenses = getTotalExpenses(transactions);
-  const balance = getBalance(transactions);
+  const income = useMemo(() => getTotalIncome(transactions), [transactions]);
+  const expenses = useMemo(() => getTotalExpenses(transactions), [transactions]);
+  const balance = useMemo(() => getBalance(transactions), [transactions]);
 
   return (
-    <motion.main
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-      className="min-h-screen bg-slate-100 px-6 py-8"
-    >
-      <div className="mx-auto max-w-6xl">
-        <header className="mb-8">
-          <p className="text-sm font-medium text-indigo-600">MoneyMapper</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-            Your money at a glance
-          </h1>
-          <p className="mt-2 text-slate-600">
-            Track income, expenses, budgets, and spending patterns.
-          </p>
-          <p className="mt-3 text-sm text-slate-500">Data source: MySQL API</p>
-        </header>
+    <div className="min-h-screen bg-canvas">
+      <header className="border-b border-structure bg-surface">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+          <span className="text-sm font-bold tracking-tight text-ink">
+            MoneyMapper
+          </span>
+          <span className="text-xs text-ink-muted">MySQL API</span>
+        </div>
+      </header>
 
-        {errorMessage && (
-          <div className="mb-6 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm font-medium text-rose-700">
-            {errorMessage}
-          </div>
-        )}
+      <main className="mx-auto max-w-6xl px-6 py-8">
+        <h1 className="sr-only">Dashboard</h1>
+        <AnimatePresence>
+          {errorMessage && (
+            <motion.div
+              key="error-banner"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="mb-6 rounded-2xl border border-negative-border bg-negative-bg p-4 text-sm font-medium text-negative-text"
+            >
+              {errorMessage}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <section className="grid gap-4 md:grid-cols-3">
           <DashboardCard
             label="Balance"
             value={<AnimatedCurrency amount={balance} />}
             helperText="Income minus expenses"
+            delay={0}
           />
           <DashboardCard
             label="Income"
             value={<AnimatedCurrency amount={income} />}
             helperText="This month"
+            delay={0.08}
           />
           <DashboardCard
             label="Expenses"
             value={<AnimatedCurrency amount={expenses} />}
             helperText="This month"
+            delay={0.16}
           />
         </section>
 
         <section className="mt-6 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
           {isLoading ? (
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-500 shadow-sm">
+            <div className="rounded-2xl border border-structure bg-surface p-5 text-sm text-ink-muted">
               Loading transactions...
             </div>
           ) : (
@@ -181,7 +223,10 @@ export function DashboardPage() {
           <div className="space-y-6">
             <TransactionForm onAddTransaction={handleAddTransaction} />
 
-            <CategoryChart transactions={transactions} />
+            <Suspense fallback={<ChartSkeleton />}>
+              <CategoryChart transactions={transactions} />
+            </Suspense>
+
             <TransactionImport
               onImportTransactions={handleImportTransactions}
             />
@@ -194,28 +239,52 @@ export function DashboardPage() {
           <SubscriptionTracker transactions={transactions} />
         </section>
 
-        <section className="mt-6">
+        <section className="mt-8">
           <div className="mb-4">
-            <h2 className="text-xl font-bold text-slate-950">Insights</h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Spot trends across income, expenses, and balance.
-            </p>
+            <p className="text-sm font-medium text-ink-muted">Insights</p>
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-2">
-            <MonthlyCashflowChart transactions={transactions} />
-            <BalanceOverTimeChart transactions={transactions} />
-            <TopSpendingCategoriesChart transactions={transactions} />
-            <CategorySpendingTrendChart transactions={transactions} />
-            <DailySpendingChart transactions={transactions} />
-            <CumulativeMonthlySpendingChart transactions={transactions} />
-            <IncomeBreakdownChart transactions={transactions} />
-            <ExpenseTypeRatioChart transactions={transactions} />
-            <SavingsRateChart transactions={transactions} />
-            <BudgetVsActualChart transactions={transactions} />
-          </div>
+          <Suspense
+            fallback={
+              <div className="grid gap-6 xl:grid-cols-2">
+                {Array.from({ length: 10 }, (_, i) => (
+                  <ChartSkeleton key={i} />
+                ))}
+              </div>
+            }
+          >
+            <motion.div
+              className="grid gap-6 xl:grid-cols-2"
+              initial="hidden"
+              animate="show"
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}
+            >
+              {([
+                MonthlyCashflowChart,
+                BalanceOverTimeChart,
+                TopSpendingCategoriesChart,
+                CategorySpendingTrendChart,
+                DailySpendingChart,
+                CumulativeMonthlySpendingChart,
+                IncomeBreakdownChart,
+                ExpenseTypeRatioChart,
+                SavingsRateChart,
+                BudgetVsActualChart,
+              ] as ComponentType<{ transactions: Transaction[] }>[]).map((Chart, i) => (
+                <motion.div
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 16 },
+                    show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
+                  }}
+                >
+                  <Chart transactions={transactions} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </Suspense>
         </section>
-      </div>
-    </motion.main>
+      </main>
+    </div>
   );
 }

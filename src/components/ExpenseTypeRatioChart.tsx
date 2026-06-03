@@ -29,7 +29,7 @@ export function ExpenseTypeRatioChart({
     datasets: [
       {
         data: chartItems.map((item) => item.amount),
-        backgroundColor: ["#4f46e5", "#f59e0b"],
+        backgroundColor: ["#0062ff", "#d97706"],
         borderColor: "#ffffff",
         borderWidth: 3,
       },
@@ -39,11 +39,11 @@ export function ExpenseTypeRatioChart({
   const totalExpenses = chartItems.reduce((sum, item) => sum + item.amount, 0);
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">
         Expense type ratio
       </h2>
-      <p className="mt-2 text-sm text-slate-500">
+      <p className="mt-2 text-sm text-ink-muted">
         Compare fixed and variable spending.
       </p>
 
@@ -85,7 +85,7 @@ export function ExpenseTypeRatioChart({
           </div>
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add expenses to compare fixed and variable spending.
         </p>
       )}

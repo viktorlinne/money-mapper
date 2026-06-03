@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "motion/react";
 import type { Transaction } from "../features/transactions/transactionTypes";
 import { formatCurrency } from "../features/transactions/transactionUtils";
 
@@ -11,64 +12,68 @@ export function TransactionList({
   onDeleteTransaction,
 }: TransactionListProps) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-ink">
           Recent transactions
         </h2>
-        <button className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
-          View all
-        </button>
       </div>
 
-      <div className="space-y-3">
+      <ul className="max-h-[480px] space-y-3 overflow-y-auto">
         {transactions.length > 0 ? (
-          transactions.map((transaction) => (
-            <div
-              key={transaction.id}
-              className="flex items-center justify-between gap-4 rounded-xl bg-slate-50 p-4"
-            >
-              <div>
-                <p className="font-medium text-slate-950">
-                  {transaction.title}
-                </p>
-                <p className="text-sm text-slate-500">
-                  {transaction.category} · {transaction.date}
-                  {transaction.type === "expense" && transaction.expenseType
-                    ? ` · ${transaction.expenseType}`
-                    : ""}
-                </p>
-              </div>
+          <AnimatePresence initial={false}>
+            {transactions.map((transaction) => (
+              <motion.li
+                key={transaction.id}
+                layout
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: -12, transition: { duration: 0.15 } }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-center justify-between gap-4 rounded-xl bg-surface-low p-4"
+              >
+                <div>
+                  <p className="font-medium text-ink">
+                    {transaction.title}
+                  </p>
+                  <p className="text-sm text-ink-muted">
+                    {transaction.category} · {transaction.date}
+                    {transaction.type === "expense" && transaction.expenseType
+                      ? ` · ${transaction.expenseType}`
+                      : ""}
+                  </p>
+                </div>
 
-              <div className="flex items-center gap-3">
-                <p
-                  className={
-                    transaction.type === "income"
-                      ? "font-semibold text-emerald-600"
-                      : "font-semibold text-rose-600"
-                  }
-                >
-                  {transaction.type === "income" ? "+" : "-"}
-                  {formatCurrency(transaction.amount)}
-                </p>
+                <div className="flex items-center gap-3">
+                  <p
+                    className={
+                      transaction.type === "income"
+                        ? "font-bold tabular-nums text-positive"
+                        : "font-bold tabular-nums text-negative"
+                    }
+                  >
+                    {transaction.type === "income" ? "+" : "−"}
+                    {formatCurrency(transaction.amount)}
+                  </p>
 
-                <button
-                  type="button"
-                  onClick={() => onDeleteTransaction(transaction.id)}
-                  className="rounded-lg px-2 py-1 text-sm font-medium text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
-                  aria-label={`Delete ${transaction.title}`}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))
+                  <button
+                    type="button"
+                    onClick={() => onDeleteTransaction(transaction.id)}
+                    className="inline-flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium text-ink-muted transition hover:bg-negative-bg hover:text-negative"
+                    aria-label={`Delete ${transaction.title}`}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </motion.li>
+            ))}
+          </AnimatePresence>
         ) : (
-          <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+          <li className="rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
             No transactions yet. Add one to get started.
-          </p>
+          </li>
         )}
-      </div>
+      </ul>
     </div>
   );
 }

@@ -23,13 +23,13 @@ type CategorySpendingTrendChartProps = {
 };
 
 const categoryColors: Record<TransactionCategory, string> = {
-  Salary: "#64748b",
-  Food: "#4f46e5",
-  Transport: "#f59e0b",
-  Housing: "#10b981",
-  Entertainment: "#f43f5e",
-  Health: "#8b5cf6",
-  Subscriptions: "#06b6d4",
+  Salary: "#6b6f8a",
+  Food: "#0062ff",
+  Transport: "#d97706",
+  Housing: "#059669",
+  Entertainment: "#e11d48",
+  Health: "#7c3aed",
+  Subscriptions: "#0d9488",
   Other: "#84cc16",
 };
 
@@ -54,13 +54,10 @@ export function CategorySpendingTrendChart({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">
         Category spending trend
       </h2>
-      <p className="mt-2 text-sm text-slate-500">
-        See how expense categories change month to month.
-      </p>
 
       {trend.length > 0 ? (
         <div className="mt-6">
@@ -103,7 +100,7 @@ export function CategorySpendingTrendChart({
           />
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add expenses across months to see category trends.
         </p>
       )}

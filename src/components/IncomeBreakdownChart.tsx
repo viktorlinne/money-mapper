@@ -13,12 +13,12 @@ type IncomeBreakdownChartProps = {
 };
 
 const incomeColors = [
-  "#10b981",
-  "#4f46e5",
-  "#06b6d4",
+  "#059669",
+  "#0062ff",
+  "#0d9488",
   "#84cc16",
-  "#f59e0b",
-  "#8b5cf6",
+  "#d97706",
+  "#7c3aed",
 ];
 
 export function IncomeBreakdownChart({
@@ -44,11 +44,8 @@ export function IncomeBreakdownChart({
   const totalIncome = chartItems.reduce((sum, [, amount]) => sum + amount, 0);
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">Income breakdown</h2>
-      <p className="mt-2 text-sm text-slate-500">
-        See where income is coming from.
-      </p>
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">Income breakdown</h2>
 
       {chartItems.length > 0 ? (
         <div className="mt-6">
@@ -83,15 +80,15 @@ export function IncomeBreakdownChart({
             />
           </div>
 
-          <p className="mt-4 text-center text-sm text-slate-500">
+          <p className="mt-4 text-center text-sm text-ink-muted">
             Total income:{" "}
-            <span className="font-semibold text-slate-700">
+            <span className="font-semibold text-ink-label">
               {formatCurrency(totalIncome)}
             </span>
           </p>
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add income to see your income breakdown.
         </p>
       )}

@@ -31,22 +31,22 @@ export function BudgetVsActualChart({
       {
         label: "Budget",
         data: budgetActuals.map((item) => item.budget),
-        backgroundColor: "#cbd5e1",
+        backgroundColor: "#dde1ef",
         borderRadius: 8,
       },
       {
         label: "Actual",
         data: budgetActuals.map((item) => item.actual),
-        backgroundColor: "#4f46e5",
+        backgroundColor: "#0062ff",
         borderRadius: 8,
       },
     ],
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">Budget vs actual</h2>
-      <p className="mt-2 text-sm text-slate-500">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">Budget vs actual</h2>
+      <p className="mt-2 text-sm text-ink-muted">
         Compare category budgets with current spending.
       </p>
 

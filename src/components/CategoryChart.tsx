@@ -13,13 +13,13 @@ type CategoryChartProps = {
 };
 
 const categoryColors = [
-  "#4f46e5",
-  "#f59e0b",
-  "#10b981",
-  "#f43f5e",
-  "#8b5cf6",
-  "#06b6d4",
-  "#64748b",
+  "#0062ff",
+  "#d97706",
+  "#059669",
+  "#e11d48",
+  "#7c3aed",
+  "#0d9488",
+  "#6b6f8a",
   "#84cc16",
 ];
 
@@ -44,13 +44,10 @@ export function CategoryChart({ transactions }: CategoryChartProps) {
   const totalExpenses = chartItems.reduce((sum, [, amount]) => sum + amount, 0);
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">
         Spending by category
       </h2>
-      <p className="mt-2 text-sm text-slate-500">
-        See where your expenses are going.
-      </p>
 
       {chartItems.length > 0 ? (
         <div className="mt-6">
@@ -85,15 +82,15 @@ export function CategoryChart({ transactions }: CategoryChartProps) {
             />
           </div>
 
-          <p className="mt-4 text-center text-sm text-slate-500">
+          <p className="mt-4 text-center text-sm text-ink-muted">
             Total expenses:{" "}
-            <span className="font-semibold text-slate-700">
+            <span className="font-semibold text-ink-label">
               {formatCurrency(totalExpenses)}
             </span>
           </p>
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add an expense to see your spending chart.
         </p>
       )}

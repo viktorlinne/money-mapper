@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import type {
   ExpenseType,
   Transaction,
@@ -25,6 +26,9 @@ const categories: TransactionCategory[] = [
 
 const getToday = () => new Date().toISOString().slice(0, 10);
 
+const inputClass =
+  "mt-1 w-full rounded-xl border border-structure bg-surface px-3 py-2 text-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring";
+
 export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -32,8 +36,9 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
   const [expenseType, setExpenseType] = useState<ExpenseType>("variable");
   const [category, setCategory] = useState<TransactionCategory>("Food");
   const [date, setDate] = useState(getToday());
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const parsedAmount = Number(amount);
@@ -47,51 +52,57 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
       return;
     }
 
-    onAddTransaction({
-      title: title.trim(),
-      amount: parsedAmount,
-      type,
-      expenseType: type === "expense" ? expenseType : null,
-      category,
-      date,
-    });
+    setIsSubmitting(true);
 
-    setTitle("");
-    setAmount("");
-    setType("expense");
-    setExpenseType("variable");
-    setCategory("Food");
-    setDate(getToday());
+    try {
+      await onAddTransaction({
+        title: title.trim(),
+        amount: parsedAmount,
+        type,
+        expenseType: type === "expense" ? expenseType : null,
+        category,
+        date,
+      });
+
+      setTitle("");
+      setAmount("");
+      setType("expense");
+      setExpenseType("variable");
+      setCategory("Food");
+      setDate(getToday());
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+      className="rounded-2xl border border-structure bg-surface p-5"
     >
       <div>
-        <h2 className="text-lg font-semibold text-slate-950">
+        <h2 className="text-lg font-semibold text-ink">
           Add transaction
         </h2>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-ink-muted">
           Add income or expenses to update your dashboard.
         </p>
       </div>
 
       <div className="mt-5 space-y-4">
         <label className="block">
-          <span className="text-sm font-medium text-slate-700">Title</span>
+          <span className="text-sm font-medium text-ink-label">Title</span>
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             type="text"
             placeholder="e.g. Groceries"
-            className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className={inputClass}
           />
         </label>
 
         <label className="block">
-          <span className="text-sm font-medium text-slate-700">Amount</span>
+          <span className="text-sm font-medium text-ink-label">Amount</span>
           <input
             value={amount}
             onChange={(event) => setAmount(event.target.value)}
@@ -99,19 +110,19 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
             min="0"
             step="0.01"
             placeholder="0"
-            className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className={inputClass}
           />
         </label>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Type</span>
+            <span className="text-sm font-medium text-ink-label">Type</span>
             <select
               value={type}
               onChange={(event) =>
                 setType(event.target.value as TransactionType)
               }
-              className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+              className={inputClass}
             >
               <option value="expense">Expense</option>
               <option value="income">Income</option>
@@ -119,56 +130,68 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
           </label>
 
           <label className="block">
-            <span className="text-sm font-medium text-slate-700">Category</span>
+            <span className="text-sm font-medium text-ink-label">Category</span>
             <select
               value={category}
               onChange={(event) =>
                 setCategory(event.target.value as TransactionCategory)
               }
-              className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+              className={inputClass}
             >
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
                 </option>
               ))}
             </select>
           </label>
         </div>
 
-        {type === "expense" && (
-          <label className="block">
-            <span className="text-sm font-medium text-slate-700">
-              Expense type
-            </span>
-            <select
-              value={expenseType}
-              onChange={(event) =>
-                setExpenseType(event.target.value as ExpenseType)
-              }
-              className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+        <AnimatePresence initial={false}>
+          {type === "expense" && (
+            <motion.div
+              key="expense-type"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.22, ease: "easeInOut" }}
+              style={{ overflow: "hidden" }}
             >
-              <option value="variable">Variable</option>
-              <option value="fixed">Fixed</option>
-            </select>
-          </label>
-        )}
+              <label className="block">
+                <span className="text-sm font-medium text-ink-label">
+                  Expense type
+                </span>
+                <select
+                  value={expenseType}
+                  onChange={(event) =>
+                    setExpenseType(event.target.value as ExpenseType)
+                  }
+                  className={inputClass}
+                >
+                  <option value="variable">Variable</option>
+                  <option value="fixed">Fixed</option>
+                </select>
+              </label>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <label className="block">
-          <span className="text-sm font-medium text-slate-700">Date</span>
+          <span className="text-sm font-medium text-ink-label">Date</span>
           <input
             value={date}
             onChange={(event) => setDate(event.target.value)}
             type="date"
-            className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className={inputClass}
           />
         </label>
 
         <button
           type="submit"
-          className="w-full rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+          disabled={isSubmitting}
+          className="w-full rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-white transition hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Add transaction
+          {isSubmitting ? "Adding..." : "Add transaction"}
         </button>
       </div>
     </form>

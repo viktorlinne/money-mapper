@@ -38,8 +38,8 @@ export function BalanceOverTimeChart({
       {
         label: "Balance",
         data: balancePoints.map((point) => point.balance),
-        borderColor: "#4f46e5",
-        backgroundColor: "#4f46e5",
+        borderColor: "#0062ff",
+        backgroundColor: "#0062ff",
         tension: 0.35,
         pointRadius: 4,
         pointHoverRadius: 6,
@@ -48,13 +48,10 @@ export function BalanceOverTimeChart({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">
         Balance over time
       </h2>
-      <p className="mt-2 text-sm text-slate-500">
-        Track how your running balance changes.
-      </p>
 
       {balancePoints.length > 0 ? (
         <div className="mt-6">
@@ -92,7 +89,7 @@ export function BalanceOverTimeChart({
           />
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add transactions to see balance history.
         </p>
       )}

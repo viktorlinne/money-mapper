@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { CHART_COLORS } from "../features/charts/chartColors";
 import type { Transaction } from "../features/transactions/transactionTypes";
 import {
   formatCurrency,
@@ -30,24 +31,21 @@ export function MonthlyCashflowChart({
       {
         label: "Income",
         data: cashflow.map((item) => item.income),
-        backgroundColor: "#10b981",
+        backgroundColor: CHART_COLORS.positive,
         borderRadius: 8,
       },
       {
         label: "Expenses",
         data: cashflow.map((item) => item.expenses),
-        backgroundColor: "#f43f5e",
+        backgroundColor: CHART_COLORS.negative,
         borderRadius: 8,
       },
     ],
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">Monthly cashflow</h2>
-      <p className="mt-2 text-sm text-slate-500">
-        Compare income and expenses by month.
-      </p>
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">Monthly cashflow</h2>
 
       {cashflow.length > 0 ? (
         <div className="mt-6">
@@ -86,7 +84,7 @@ export function MonthlyCashflowChart({
           />
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add transactions to see monthly cashflow.
         </p>
       )}

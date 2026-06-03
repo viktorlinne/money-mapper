@@ -11,6 +11,12 @@ export function AnimatedCurrency({ amount }: AnimatedCurrencyProps) {
   const previousAmount = useRef(amount);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplayAmount(amount);
+      previousAmount.current = amount;
+      return;
+    }
+
     const animatedValue = { value: previousAmount.current };
 
     const animation = animate(animatedValue, {

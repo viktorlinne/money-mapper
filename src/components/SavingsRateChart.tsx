@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { CHART_COLORS } from "../features/charts/chartColors";
 import type { Transaction } from "../features/transactions/transactionTypes";
 import { getSavingsRateOverTime } from "../features/transactions/transactionUtils";
 
@@ -33,8 +34,8 @@ export function SavingsRateChart({ transactions }: SavingsRateChartProps) {
       {
         label: "Savings rate",
         data: savingsRatePoints.map((point) => point.savingsRate),
-        borderColor: "#10b981",
-        backgroundColor: "#10b981",
+        borderColor: CHART_COLORS.positive,
+        backgroundColor: CHART_COLORS.positive,
         tension: 0.35,
         pointRadius: 4,
       },
@@ -42,9 +43,9 @@ export function SavingsRateChart({ transactions }: SavingsRateChartProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">Savings rate</h2>
-      <p className="mt-2 text-sm text-slate-500">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">Savings rate</h2>
+      <p className="mt-2 text-sm text-ink-muted">
         Percentage of income left after expenses.
       </p>
 
@@ -84,7 +85,7 @@ export function SavingsRateChart({ transactions }: SavingsRateChartProps) {
           />
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add income and expenses to see savings rate.
         </p>
       )}

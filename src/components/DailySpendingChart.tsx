@@ -6,6 +6,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { CHART_COLORS } from "../features/charts/chartColors";
 import type { Transaction } from "../features/transactions/transactionTypes";
 import {
   formatCurrency,
@@ -29,16 +30,16 @@ export function DailySpendingChart({ transactions }: DailySpendingChartProps) {
       {
         label: "Daily spending",
         data: dailySpending.map((item) => item.amount),
-        backgroundColor: "#f43f5e",
+        backgroundColor: CHART_COLORS.negative,
         borderRadius: 8,
       },
     ],
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">Daily spending</h2>
-      <p className="mt-2 text-sm text-slate-500">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">Daily spending</h2>
+      <p className="mt-2 text-sm text-ink-muted">
         Expense totals by day for {month ?? "the latest month"}.
       </p>
 
@@ -79,7 +80,7 @@ export function DailySpendingChart({ transactions }: DailySpendingChartProps) {
           />
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add expenses to see daily spending.
         </p>
       )}

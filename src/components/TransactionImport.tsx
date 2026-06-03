@@ -1,4 +1,5 @@
-import type { ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import type {
   ExpenseType,
   Transaction,
@@ -74,6 +75,15 @@ function parseImportedTransaction(
 export function TransactionImport({
   onImportTransactions,
 }: TransactionImportProps) {
+  const [importedCount, setImportedCount] = useState<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
 
@@ -94,26 +104,29 @@ export function TransactionImport({
 
     if (transactions.length > 0) {
       await onImportTransactions(transactions);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      setImportedCount(transactions.length);
+      timeoutRef.current = setTimeout(() => setImportedCount(null), 3000);
     }
 
     event.target.value = "";
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">
         Excel / CSV import
       </h2>
-      <p className="mt-2 text-sm text-slate-500">
+      <p className="mt-2 text-sm text-ink-muted">
         Import rows with title, amount, type, category, date, and optional
         expenseType.
       </p>
 
-      <label className="mt-5 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center transition hover:border-indigo-400 hover:bg-indigo-50">
-        <span className="text-sm font-semibold text-slate-700">
+      <label className="mt-5 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-structure bg-surface-low p-6 text-center transition hover:border-accent hover:bg-accent-subtle">
+        <span className="text-sm font-semibold text-ink-label">
           Choose .xlsx or .csv file
         </span>
-        <span className="mt-1 text-xs text-slate-500">
+        <span className="mt-1 text-xs text-ink-muted">
           Invalid rows are skipped.
         </span>
         <input
@@ -123,6 +136,21 @@ export function TransactionImport({
           className="sr-only"
         />
       </label>
+
+      <AnimatePresence>
+        {importedCount !== null && (
+          <motion.p
+            key="import-success"
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="mt-3 text-sm font-medium text-positive"
+          >
+            {importedCount} transaction{importedCount !== 1 ? "s" : ""} imported.
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

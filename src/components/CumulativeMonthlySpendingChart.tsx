@@ -42,8 +42,8 @@ export function CumulativeMonthlySpendingChart({
       {
         label: "Cumulative spending",
         data: cumulativeSpending.map((item) => item.amount),
-        borderColor: "#f59e0b",
-        backgroundColor: "#f59e0b",
+        borderColor: "#d97706",
+        backgroundColor: "#d97706",
         tension: 0.35,
         pointRadius: 4,
       },
@@ -51,11 +51,11 @@ export function CumulativeMonthlySpendingChart({
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">
         Cumulative monthly spending
       </h2>
-      <p className="mt-2 text-sm text-slate-500">
+      <p className="mt-2 text-sm text-ink-muted">
         Running expense total for {month ?? "the latest month"}.
       </p>
 
@@ -96,7 +96,7 @@ export function CumulativeMonthlySpendingChart({
           />
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add expenses to see cumulative spending.
         </p>
       )}

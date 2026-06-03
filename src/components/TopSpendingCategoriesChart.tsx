@@ -32,20 +32,17 @@ export function TopSpendingCategoriesChart({
       {
         label: "Spending",
         data: topCategories.map(([, amount]) => amount),
-        backgroundColor: "#f59e0b",
+        backgroundColor: "#d97706",
         borderRadius: 8,
       },
     ],
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-950">
+    <div className="rounded-2xl border border-structure bg-surface p-5">
+      <h2 className="text-lg font-semibold text-ink">
         Top spending categories
       </h2>
-      <p className="mt-2 text-sm text-slate-500">
-        Your largest expense categories.
-      </p>
 
       {topCategories.length > 0 ? (
         <div className="mt-6">
@@ -85,7 +82,7 @@ export function TopSpendingCategoriesChart({
           />
         </div>
       ) : (
-        <p className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+        <p className="mt-6 rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
           Add expenses to see top categories.
         </p>
       )}
