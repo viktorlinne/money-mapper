@@ -42,6 +42,9 @@ public sealed class MoneyMapperApiFactory : WebApplicationFactory<Program>
                 options.UseInMemoryDatabase(_databaseName)
             );
 
+            services.AddHttpClient("frankfurter")
+                .ConfigurePrimaryHttpMessageHandler(() => new FakeFrankfurterHandler());
+
             using var scope = services.BuildServiceProvider().CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<MoneyMapperDbContext>();
             dbContext.Database.EnsureCreated();

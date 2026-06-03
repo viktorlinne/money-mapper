@@ -34,6 +34,11 @@ public static class ServiceCollectionExtensions
                 options.UseMySql(connectionString, ServerVersion.Parse(mySqlVersion)));
         }
 
+        services.AddHttpClient("frankfurter", httpClient =>
+        {
+            httpClient.BaseAddress = new Uri("https://api.frankfurter.app/");
+        });
+
         services.AddOpenApi();
 
         return services;

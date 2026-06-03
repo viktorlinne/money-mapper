@@ -16,6 +16,7 @@ app.UseHttpsRedirection();
 app.UseCors(ServiceCollectionExtensions.ViteCorsPolicy);
 
 app.MapTransactionEndpoints();
+app.MapCurrencyEndpoints();
 app.MapGet("/api/health", () => Results.Ok(new { status = "ok" }));
 
 app.Run();
