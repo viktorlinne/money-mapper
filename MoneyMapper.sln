@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{DAD03CFC-D5FA-AC94-41C7-9ABAB326F09E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMapper.Api", "server\MoneyMapper.Api\MoneyMapper.Api.csproj", "{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMapper.Api.Tests", "tests\MoneyMapper.Api.Tests\MoneyMapper.Api.Tests.csproj", "{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Debug|x64.Build.0 = Debug|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Debug|x86.Build.0 = Debug|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Release|x64.ActiveCfg = Release|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Release|x64.Build.0 = Release|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Release|x86.ActiveCfg = Release|Any CPU
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C}.Release|x86.Build.0 = Release|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Debug|x64.Build.0 = Debug|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Debug|x86.Build.0 = Debug|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Release|x64.ActiveCfg = Release|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Release|x64.Build.0 = Release|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Release|x86.ActiveCfg = Release|Any CPU
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1D9B502A-9C73-4B6E-8EAB-78D813C7D03C} = {DAD03CFC-D5FA-AC94-41C7-9ABAB326F09E}
+		{962B7023-873D-44F2-9EE9-D9F2EF84D0E9} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+	EndGlobalSection
+EndGlobal

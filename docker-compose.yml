@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: money-mapper-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: money_mapper
+      MYSQL_USER: money_mapper
+      MYSQL_PASSWORD: money_mapper_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - money-mapper-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  money-mapper-mysql-data:
