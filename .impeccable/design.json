@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-03T00:00:00.000Z",
+  "title": "Design System: MoneyMapper",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Focused Indigo",
+        "canonical": "oklch(48.2% 0.243 264)",
+        "tonalRamp": [
+          "oklch(15% 0.20 264)",
+          "oklch(25% 0.22 264)",
+          "oklch(35% 0.235 264)",
+          "oklch(45% 0.243 264)",
+          "oklch(55% 0.22 264)",
+          "oklch(67% 0.18 264)",
+          "oklch(80% 0.12 264)",
+          "oklch(93% 0.04 264)"
+        ]
+      },
+      "accent-deep": {
+        "role": "primary",
+        "displayName": "Deep Indigo",
+        "canonical": "oklch(43% 0.245 264)",
+        "tonalRamp": [
+          "oklch(12% 0.20 264)",
+          "oklch(22% 0.22 264)",
+          "oklch(32% 0.235 264)",
+          "oklch(42% 0.245 264)",
+          "oklch(52% 0.22 264)",
+          "oklch(64% 0.18 264)",
+          "oklch(78% 0.12 264)",
+          "oklch(92% 0.04 264)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Tool Surface",
+        "canonical": "oklch(95.2% 0.007 248)",
+        "tonalRamp": [
+          "oklch(20% 0.010 248)",
+          "oklch(35% 0.010 248)",
+          "oklch(50% 0.008 248)",
+          "oklch(65% 0.008 248)",
+          "oklch(75% 0.007 248)",
+          "oklch(85% 0.007 248)",
+          "oklch(92% 0.005 248)",
+          "oklch(97% 0.003 248)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Elevated White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(10% 0 0)",
+          "oklch(25% 0 0)",
+          "oklch(40% 0 0)",
+          "oklch(55% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(92% 0 0)",
+          "oklch(100% 0 0)"
+        ]
+      },
+      "surface-low": {
+        "role": "neutral",
+        "displayName": "Inset Surface",
+        "canonical": "oklch(97.5% 0.004 248)",
+        "tonalRamp": [
+          "oklch(20% 0.004 248)",
+          "oklch(35% 0.004 248)",
+          "oklch(50% 0.004 248)",
+          "oklch(65% 0.004 248)",
+          "oklch(78% 0.004 248)",
+          "oklch(88% 0.004 248)",
+          "oklch(94% 0.004 248)",
+          "oklch(98% 0.002 248)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Near Black",
+        "canonical": "oklch(13% 0.012 248)",
+        "tonalRamp": [
+          "oklch(8% 0.012 248)",
+          "oklch(15% 0.012 248)",
+          "oklch(25% 0.012 248)",
+          "oklch(35% 0.010 248)",
+          "oklch(50% 0.010 248)",
+          "oklch(65% 0.008 248)",
+          "oklch(80% 0.006 248)",
+          "oklch(93% 0.004 248)"
+        ]
+      },
+      "positive": {
+        "role": "semantic",
+        "displayName": "Signal Green",
+        "canonical": "oklch(53.6% 0.164 162)",
+        "tonalRamp": [
+          "oklch(18% 0.15 162)",
+          "oklch(28% 0.16 162)",
+          "oklch(38% 0.165 162)",
+          "oklch(48% 0.164 162)",
+          "oklch(57% 0.155 162)",
+          "oklch(68% 0.14 162)",
+          "oklch(80% 0.10 162)",
+          "oklch(93% 0.05 162)"
+        ]
+      },
+      "negative": {
+        "role": "semantic",
+        "displayName": "Deficit Red",
+        "canonical": "oklch(49.1% 0.229 16)",
+        "tonalRamp": [
+          "oklch(18% 0.20 16)",
+          "oklch(28% 0.22 16)",
+          "oklch(37% 0.23 16)",
+          "oklch(46% 0.229 16)",
+          "oklch(55% 0.21 16)",
+          "oklch(67% 0.17 16)",
+          "oklch(80% 0.10 16)",
+          "oklch(93% 0.04 16)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Structure Line",
+        "canonical": "oklch(90% 0.008 248)",
+        "tonalRamp": [
+          "oklch(20% 0.008 248)",
+          "oklch(35% 0.008 248)",
+          "oklch(50% 0.008 248)",
+          "oklch(65% 0.008 248)",
+          "oklch(78% 0.008 248)",
+          "oklch(87% 0.008 248)",
+          "oklch(94% 0.005 248)",
+          "oklch(98% 0.003 248)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page title. One instance per dashboard view." },
+      "headline": { "displayName": "Headline", "purpose": "Primary financial figures: balance, income, expenses in stat cards." },
+      "title": { "displayName": "Title", "purpose": "Section headings and card anchors." },
+      "body": { "displayName": "Body", "purpose": "Transaction titles, form input values, prose descriptions." },
+      "label": { "displayName": "Label", "purpose": "Form labels, helper text, metadata, category tags, chart axis labels." }
+    },
+    "shadows": [
+      {
+        "name": "float",
+        "value": "0 4px 16px rgba(2, 6, 23, 0.12)",
+        "purpose": "Floating elements only: dropdowns, tooltips, popovers. Never applied to surfaces at rest."
+      }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for state transitions." },
+      { "name": "ease-out-standard", "value": "cubic-bezier(0, 0, 0.2, 1)", "purpose": "Enter transitions and reveals." },
+      { "name": "duration-fast", "value": "150ms", "purpose": "Interactive feedback: hover, focus, button press." },
+      { "name": "duration-standard", "value": "250ms", "purpose": "Page-level transitions and card entrances." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Full-width submit action. Used at the bottom of forms as the single CTA.",
+      "html": "<button class=\"ds-btn-primary\">Add transaction</button>",
+      "css": ".ds-btn-primary { display: block; width: 100%; background: #4f46e5; color: #ffffff; padding: 10px 16px; border-radius: 12px; border: none; font-size: 0.875rem; font-weight: 600; font-family: system-ui, -apple-system, sans-serif; cursor: pointer; transition: background 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: #4338ca; } .ds-btn-primary:focus-visible { outline: 2px solid #4f46e5; outline-offset: 2px; box-shadow: 0 0 0 4px #e0e7ff; } .ds-btn-primary:disabled { opacity: 0.4; pointer-events: none; }"
+    },
+    {
+      "name": "Ghost Danger Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Inline destructive action. Quiet at rest, loud on hover. Used for delete actions in transaction rows.",
+      "html": "<button class=\"ds-btn-ghost-danger\">Delete</button>",
+      "css": ".ds-btn-ghost-danger { background: transparent; color: #64748b; padding: 4px 8px; border-radius: 8px; border: none; font-size: 0.875rem; font-weight: 500; font-family: system-ui, -apple-system, sans-serif; cursor: pointer; transition: background 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-ghost-danger:hover { background: #fff1f2; color: #e11d48; } .ds-btn-ghost-danger:focus-visible { outline: 2px solid #4f46e5; outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Standard form field with persistent label above. Used for transaction title, amount, and date.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Title</span><input class=\"ds-input\" type=\"text\" placeholder=\"e.g. Groceries\" /></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 4px; } .ds-field-label { font-size: 0.875rem; font-weight: 500; color: #334155; font-family: system-ui, -apple-system, sans-serif; } .ds-input { background: #ffffff; color: #020617; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px 12px; font-size: 0.875rem; font-family: system-ui, -apple-system, sans-serif; outline: none; width: 100%; box-sizing: border-box; transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px #e0e7ff; } .ds-input::placeholder { color: #94a3b8; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Primary container for dashboard sections. Flat surface with structural border, no shadow.",
+      "html": "<div class=\"ds-card\"><h2 class=\"ds-card-heading\">Recent transactions</h2><p class=\"ds-card-subtext\">Your latest entries.</p></div>",
+      "css": ".ds-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; } .ds-card-heading { font-size: 1.125rem; font-weight: 600; color: #020617; font-family: system-ui, -apple-system, sans-serif; margin: 0; } .ds-card-subtext { font-size: 0.875rem; color: #64748b; font-family: system-ui, -apple-system, sans-serif; margin: 4px 0 0; }"
+    },
+    {
+      "name": "Transaction Row",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature component. Displays a single transaction with title, metadata, signed amount, and delete action. Text-first, no icons.",
+      "html": "<div class=\"ds-transaction-row\"><div class=\"ds-transaction-info\"><p class=\"ds-transaction-title\">Groceries</p><p class=\"ds-transaction-meta\">Food · 2026-06-03 · variable</p></div><div class=\"ds-transaction-actions\"><span class=\"ds-transaction-amount ds-amount-negative\">-$42.50</span><button class=\"ds-row-delete\">Delete</button></div></div>",
+      "css": ".ds-transaction-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #f8fafc; border-radius: 12px; padding: 16px; } .ds-transaction-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .ds-transaction-title { font-size: 1rem; font-weight: 500; color: #020617; font-family: system-ui, -apple-system, sans-serif; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ds-transaction-meta { font-size: 0.875rem; color: #64748b; font-family: system-ui, -apple-system, sans-serif; margin: 0; } .ds-transaction-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; } .ds-transaction-amount { font-size: 1rem; font-weight: 600; font-family: system-ui, -apple-system, sans-serif; } .ds-amount-positive { color: #059669; } .ds-amount-negative { color: #e11d48; } .ds-row-delete { background: transparent; color: #64748b; padding: 4px 8px; border-radius: 8px; border: none; font-size: 0.875rem; font-weight: 500; font-family: system-ui, -apple-system, sans-serif; cursor: pointer; transition: background 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-row-delete:hover { background: #fff1f2; color: #e11d48; } .ds-row-delete:focus-visible { outline: 2px solid #4f46e5; outline-offset: 2px; }"
+    },
+    {
+      "name": "Dashboard Stat Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Signature component. Displays a single financial metric. The value is the visual anchor.",
+      "html": "<div class=\"ds-stat-card\"><p class=\"ds-stat-label\">Balance</p><p class=\"ds-stat-value\">$1,240.00</p><p class=\"ds-stat-helper\">Income minus expenses</p></div>",
+      "css": ".ds-stat-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; } .ds-stat-label { font-size: 0.875rem; font-weight: 500; color: #64748b; font-family: system-ui, -apple-system, sans-serif; margin: 0; } .ds-stat-value { font-size: 1.5rem; font-weight: 700; color: #020617; font-family: system-ui, -apple-system, sans-serif; margin: 8px 0 0; } .ds-stat-helper { font-size: 0.875rem; font-weight: 400; color: #64748b; font-family: system-ui, -apple-system, sans-serif; margin: 8px 0 0; }"
+    },
+    {
+      "name": "Error Banner",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Full-width error state for API failures and validation errors.",
+      "html": "<div class=\"ds-error-banner\">Could not connect to the MoneyMapper API.</div>",
+      "css": ".ds-error-banner { background: #fff1f2; border: 1px solid #fecdd3; border-radius: 16px; padding: 16px; font-size: 0.875rem; font-weight: 500; color: #be123c; font-family: system-ui, -apple-system, sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Analyst's Workbench",
+    "overview": "MoneyMapper is a tool for one person who knows their data. The interface's job is to stay out of the way while making numbers immediately readable. Nothing celebrates, nothing encourages, nothing softens. It is a quiet surface for clear thinking.\n\nThis system rejects four failure modes by name: the consumer-finance softness of Mint and YNAB (pastel palettes, rounded-everything, hand-holding copy); the inflated hype of Robinhood (green gradients, gamified tracking); the generic SaaS dashboard template (cool-gray background, white cards with gray borders, indigo accent on everything); and banking-app sterility (corporate, institutional, zero craft). What remains is a precise, capable instrument that treats its user as a competent adult.\n\nColor is restrained: one accent for actions, semantic green and red for financial meaning, neutral grays for everything else. Elevation is structural: flat surfaces defined by borders, not shadows. Motion is limited to state feedback at 150-250ms. The system font carries all hierarchy.",
+    "keyCharacteristics": [
+      "Structural borders define containers; shadows appear only on floating elements",
+      "Semantic color for financial meaning only (green = income, red = expense, never decorative)",
+      "System font stack throughout; legibility over typographic personality",
+      "Data density is a feature, not a problem to manage with progressive disclosure",
+      "One accent color, on less than 10% of any screen at a time"
+    ],
+    "rules": [
+      {
+        "name": "The One Voice Rule",
+        "body": "Focused Indigo (#4f46e5) appears on a maximum of 10% of any screen. Reserved for primary CTA, active input borders, and focus rings. Never on decorative elements, section headings, background fills, or chart series.",
+        "section": "colors"
+      },
+      {
+        "name": "The Semantic Pledge",
+        "body": "Signal Green means income. Deficit Red means expense or error. These two colors are never repurposed for other semantic roles.",
+        "section": "colors"
+      },
+      {
+        "name": "The Number Priority Rule",
+        "body": "Financial amounts always render at 700 weight minimum. The amount is primary; the label names it.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Scale Rule",
+        "body": "Five steps, nothing outside them: display, headline, title, body, label. No ad-hoc sizes.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "No surface carries a shadow at rest. The Float shadow is for floating elements only: dropdowns, tooltips, popovers.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Signal Green (#059669) and Deficit Red (#e11d48) exclusively for financial values. Their consistency is the system.",
+      "Do use Focused Indigo on a maximum of one prominent interactive element per viewport.",
+      "Do keep form labels as persistent text above the field at Label Gray (#334155, 500 weight, 14px).",
+      "Do use 12px radius for inputs and inline elements; 16px radius for cards and containers.",
+      "Do add a prefers-reduced-motion fallback for every framer-motion animation.",
+      "Do render financial figures at 700 weight. The number is the product.",
+      "Do use Structure Line (#e2e8f0) as the single border token across all inputs and containers."
+    ],
+    "donts": [
+      "Don't replicate the generic SaaS dashboard template: no cream backgrounds, no shadow-sm on every card, no Focused Indigo on decorative elements.",
+      "Don't introduce Mint/YNAB consumer-finance softness: no pastels, no encouraging microcopy, no rounded-3xl+ corners.",
+      "Don't introduce Robinhood-style hype: no gradient fills on positive amounts, no gamified progress bars.",
+      "Don't use gradient text (background-clip: text with a gradient fill). Solid color only.",
+      "Don't add a border-left wider than 1px as a colored stripe on cards or list items.",
+      "Don't apply shadows to surfaces at rest.",
+      "Don't use Focused Indigo on headings, dividers, or background fills.",
+      "Don't use the eyebrow pattern (small all-caps tracked labels above every section heading)."
+    ]
+  }
+}
