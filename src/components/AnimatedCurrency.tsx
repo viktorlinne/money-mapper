@@ -9,10 +9,12 @@ type AnimatedCurrencyProps = {
 export function AnimatedCurrency({ amount }: AnimatedCurrencyProps) {
   const [displayAmount, setDisplayAmount] = useState(amount);
   const previousAmount = useRef(amount);
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplayAmount(amount);
+    if (prefersReducedMotion) {
       previousAmount.current = amount;
       return;
     }
@@ -32,7 +34,7 @@ export function AnimatedCurrency({ amount }: AnimatedCurrencyProps) {
     return () => {
       animation.revert();
     };
-  }, [amount]);
+  }, [amount, prefersReducedMotion]);
 
-  return <>{formatCurrency(displayAmount)}</>;
+  return <>{formatCurrency(prefersReducedMotion ? amount : displayAmount)}</>;
 }

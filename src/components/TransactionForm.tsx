@@ -11,6 +11,9 @@ type TransactionFormProps = {
   onAddTransaction: (
     transaction: Omit<Transaction, "id">,
   ) => void | Promise<void>;
+  initialTransaction?: Transaction;
+  submitLabel?: string;
+  onCancel?: () => void;
 };
 
 const categories: TransactionCategory[] = [
@@ -29,13 +32,26 @@ const getToday = () => new Date().toISOString().slice(0, 10);
 const inputClass =
   "mt-1 w-full rounded-xl border border-structure bg-surface px-3 py-2 text-sm outline-none transition focus:border-accent focus:ring-2 focus:ring-accent-ring";
 
-export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [type, setType] = useState<TransactionType>("expense");
-  const [expenseType, setExpenseType] = useState<ExpenseType>("variable");
-  const [category, setCategory] = useState<TransactionCategory>("Food");
-  const [date, setDate] = useState(getToday());
+export function TransactionForm({
+  onAddTransaction,
+  initialTransaction,
+  submitLabel = "Add transaction",
+  onCancel,
+}: TransactionFormProps) {
+  const [title, setTitle] = useState(initialTransaction?.title ?? "");
+  const [amount, setAmount] = useState(
+    initialTransaction ? String(initialTransaction.amount) : "",
+  );
+  const [type, setType] = useState<TransactionType>(
+    initialTransaction?.type ?? "expense",
+  );
+  const [expenseType, setExpenseType] = useState<ExpenseType>(
+    initialTransaction?.expenseType ?? "variable",
+  );
+  const [category, setCategory] = useState<TransactionCategory>(
+    initialTransaction?.category ?? "Food",
+  );
+  const [date, setDate] = useState(initialTransaction?.date ?? getToday());
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -64,12 +80,14 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
         date,
       });
 
-      setTitle("");
-      setAmount("");
-      setType("expense");
-      setExpenseType("variable");
-      setCategory("Food");
-      setDate(getToday());
+      if (!initialTransaction) {
+        setTitle("");
+        setAmount("");
+        setType("expense");
+        setExpenseType("variable");
+        setCategory("Food");
+        setDate(getToday());
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -82,7 +100,7 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
     >
       <div>
         <h2 className="text-lg font-semibold text-ink">
-          Add transaction
+          {initialTransaction ? "Edit transaction" : "Add transaction"}
         </h2>
         <p className="mt-1 text-sm text-ink-muted">
           Add income or expenses to update your dashboard.
@@ -191,8 +209,17 @@ export function TransactionForm({ onAddTransaction }: TransactionFormProps) {
           disabled={isSubmitting}
           className="w-full rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-white transition hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {isSubmitting ? "Adding..." : "Add transaction"}
+          {isSubmitting ? "Saving..." : submitLabel}
         </button>
+        {onCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="w-full rounded-xl border border-structure px-4 py-3 text-sm font-semibold text-ink-muted transition hover:bg-surface-low hover:text-ink"
+          >
+            Cancel
+          </button>
+        )}
       </div>
     </form>
   );

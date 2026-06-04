@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyMapper.Api.Data;
 
@@ -11,9 +12,11 @@ using MoneyMapper.Api.Data;
 namespace MoneyMapper.Api.Data.Migrations
 {
     [DbContext(typeof(MoneyMapperDbContext))]
-    partial class MoneyMapperDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260604183156_AddBudgetsAndSubscriptions")]
+    partial class AddBudgetsAndSubscriptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

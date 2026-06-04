@@ -28,6 +28,25 @@ export async function createTransaction(transaction: Omit<Transaction, "id">) {
   return response.json() as Promise<Transaction>;
 }
 
+export async function updateTransaction(
+  transactionId: string,
+  transaction: Omit<Transaction, "id">,
+) {
+  const response = await fetch(`${apiBaseUrl}/transactions/${transactionId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(transaction),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update transaction.");
+  }
+
+  return response.json() as Promise<Transaction>;
+}
+
 export async function deleteTransaction(transactionId: string) {
   const response = await fetch(`${apiBaseUrl}/transactions/${transactionId}`, {
     method: "DELETE",

@@ -5,11 +5,13 @@ import { formatCurrency } from "../features/transactions/transactionUtils";
 type TransactionListProps = {
   transactions: Transaction[];
   onDeleteTransaction: (transactionId: string) => void;
+  onEditTransaction?: (transaction: Transaction) => void;
 };
 
 export function TransactionList({
   transactions,
   onDeleteTransaction,
+  onEditTransaction,
 }: TransactionListProps) {
   return (
     <div className="rounded-2xl border border-structure bg-surface p-5">
@@ -55,6 +57,17 @@ export function TransactionList({
                     {transaction.type === "income" ? "+" : "−"}
                     {formatCurrency(transaction.amount)}
                   </p>
+
+                  {onEditTransaction && (
+                    <button
+                      type="button"
+                      onClick={() => onEditTransaction(transaction)}
+                      className="inline-flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium text-ink-muted transition hover:bg-accent-subtle hover:text-accent-deep"
+                      aria-label={`Edit ${transaction.title}`}
+                    >
+                      Edit
+                    </button>
+                  )}
 
                   <button
                     type="button"

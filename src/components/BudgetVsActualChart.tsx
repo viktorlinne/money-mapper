@@ -7,7 +7,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { categoryBudgets } from "../features/budgets/budgetData";
+import type { Budget } from "../features/budgets/budgetTypes";
 import type { Transaction } from "../features/transactions/transactionTypes";
 import {
   formatCurrency,
@@ -18,12 +18,20 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 type BudgetVsActualChartProps = {
   transactions: Transaction[];
+  budgets: Budget[];
 };
 
 export function BudgetVsActualChart({
   transactions,
+  budgets,
 }: BudgetVsActualChartProps) {
-  const budgetActuals = getBudgetActuals(transactions, categoryBudgets);
+  const budgetActuals = getBudgetActuals(
+    transactions,
+    budgets.map((budget) => ({
+      category: budget.category,
+      budget: budget.amount,
+    })),
+  );
 
   const chartData = {
     labels: budgetActuals.map((item) => item.category),
@@ -51,7 +59,8 @@ export function BudgetVsActualChart({
       </p>
 
       <div className="mt-6">
-        <Bar
+        {budgetActuals.length > 0 ? (
+          <Bar
           data={chartData}
           options={{
             responsive: true,
@@ -83,7 +92,12 @@ export function BudgetVsActualChart({
               },
             },
           }}
-        />
+          />
+        ) : (
+          <p className="rounded-xl bg-surface-low p-4 text-sm text-ink-muted">
+            Add budgets to compare planned and actual spending.
+          </p>
+        )}
       </div>
     </div>
   );

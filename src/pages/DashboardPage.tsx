@@ -8,6 +8,10 @@ import { SubscriptionTracker } from "../components/SubscriptionTracker";
 import { TransactionForm } from "../components/TransactionForm";
 import { TransactionImport } from "../components/TransactionImport";
 import { TransactionList } from "../components/TransactionList";
+import { fetchBudgets } from "../features/budgets/budgetApi";
+import type { Budget } from "../features/budgets/budgetTypes";
+import { fetchSubscriptions } from "../features/subscriptions/subscriptionApi";
+import type { Subscription } from "../features/subscriptions/subscriptionTypes";
 import {
   createTransaction,
   deleteTransaction,
@@ -65,6 +69,8 @@ function ChartSkeleton() {
 
 export function DashboardPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -73,10 +79,16 @@ export function DashboardPage() {
 
     async function loadTransactions() {
       try {
-        const apiTransactions = await fetchTransactions();
+        const [apiTransactions, apiBudgets, apiSubscriptions] = await Promise.all([
+          fetchTransactions(),
+          fetchBudgets(),
+          fetchSubscriptions(),
+        ]);
 
         if (!ignore) {
           setTransactions(apiTransactions);
+          setBudgets(apiBudgets);
+          setSubscriptions(apiSubscriptions);
           setErrorMessage(null);
         }
       } catch (error) {
@@ -160,18 +172,16 @@ export function DashboardPage() {
   const balance = useMemo(() => getBalance(transactions), [transactions]);
 
   return (
-    <div className="min-h-screen bg-canvas">
-      <header className="border-b border-structure bg-surface">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <span className="text-sm font-bold tracking-tight text-ink">
-            MoneyMapper
-          </span>
-          <span className="text-xs text-ink-muted">MySQL API</span>
+    <>
+        <div className="mb-8">
+          <p className="text-sm font-medium text-ink-muted">Dashboard</p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-ink">
+            Your money at a glance
+          </h1>
+          <p className="mt-2 text-ink-secondary">
+            Track income, expenses, budgets, and spending patterns.
+          </p>
         </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl px-6 py-8">
-        <h1 className="sr-only">Dashboard</h1>
         <AnimatePresence>
           {errorMessage && (
             <motion.div
@@ -235,8 +245,11 @@ export function DashboardPage() {
         </section>
 
         <section className="mt-6 grid gap-6 lg:grid-cols-2">
-          <CategoryBudgetOverview transactions={transactions} />
-          <SubscriptionTracker transactions={transactions} />
+          <CategoryBudgetOverview transactions={transactions} budgets={budgets} />
+          <SubscriptionTracker
+            transactions={transactions}
+            subscriptions={subscriptions}
+          />
         </section>
 
         <section className="mt-8">
@@ -269,7 +282,6 @@ export function DashboardPage() {
                 IncomeBreakdownChart,
                 ExpenseTypeRatioChart,
                 SavingsRateChart,
-                BudgetVsActualChart,
               ] as ComponentType<{ transactions: Transaction[] }>[]).map((Chart, i) => (
                 <motion.div
                   key={i}
@@ -281,10 +293,17 @@ export function DashboardPage() {
                   <Chart transactions={transactions} />
                 </motion.div>
               ))}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 16 },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
+                }}
+              >
+                <BudgetVsActualChart transactions={transactions} budgets={budgets} />
+              </motion.div>
             </motion.div>
           </Suspense>
         </section>
-      </main>
-    </div>
+    </>
   );
 }
